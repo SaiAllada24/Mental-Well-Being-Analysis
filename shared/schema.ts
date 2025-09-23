@@ -61,10 +61,14 @@ export interface RiskProfile {
   emoji: string;
   criteria: ProfileCriteria;
   narrative: string;
-  suggestions: string[];
-  quote: string;
+  philosophy: string;
+  suggestions: {
+    immediate: string;
+    mediumTerm: string;
+    mindset: string;
+  };
   celebrityParallel: string;
-  youreNotAlone: string;
+  whoElseWentThroughThis: string;
 }
 
 export const riskProfiles: RiskProfile[] = [
@@ -88,10 +92,14 @@ export const riskProfiles: RiskProfile[] = [
       occupation: "Student"
     },
     narrative: "You carry experiences like chapters — some heavy, some hopeful. You've been here before, and you're learning to shape new endings.",
-    suggestions: ["Track emotional triggers", "build small daily rituals", "celebrate incremental wins"],
-    quote: "Healing is not linear.",
-    celebrityParallel: "Demi Lovato",
-    youreNotAlone: "42.5% of people with a mental health history report growing stress."
+    philosophy: "Life is a tapestry; even the frayed threads add depth and beauty.",
+    suggestions: {
+      immediate: "Keep a \"chapter journal\" to reframe difficult moments as lessons.",
+      mediumTerm: "Share one chapter with a trusted listener to lighten its weight.",
+      mindset: "See yourself as the author, not just the character."
+    },
+    celebrityParallel: "Demi Lovato — turned her struggles with addiction and mental health into music and advocacy, showing that rewriting your story is possible.",
+    whoElseWentThroughThis: "42.5% of people with a mental health history report growing stress."
   },
   {
     id: "rising-voice",
@@ -113,10 +121,14 @@ export const riskProfiles: RiskProfile[] = [
       occupation: "Student"
     },
     narrative: "You're finding your words and your courage. Speaking up feels new, but each time you do, you strengthen your voice.",
-    suggestions: ["Join a safe discussion space", "practice sharing one thought daily", "seek mentorship"],
-    quote: "Your voice is your power.",
-    celebrityParallel: "Selena Gomez",
-    youreNotAlone: "Nearly half of those comfortable discussing mental health also seek treatment."
+    philosophy: "Courage grows in the space between fear and action.",
+    suggestions: {
+      immediate: "Practice speaking in safe, low-stakes spaces.",
+      mediumTerm: "Join a cause or group aligned with your values.",
+      mindset: "Treat each conversation as a seed for change."
+    },
+    celebrityParallel: "Selena Gomez — overcame anxiety and depression, using her platform to speak openly and create a mental health fund through Rare Beauty.",
+    whoElseWentThroughThis: "Nearly half of those comfortable discussing mental health also seek treatment."
   },
   {
     id: "careful-climber",
@@ -138,10 +150,14 @@ export const riskProfiles: RiskProfile[] = [
       occupation: "Others"
     },
     narrative: "You move forward with intention, weighing each step. Progress is steady, even if cautious.",
-    suggestions: ["Set achievable goals", "acknowledge small victories", "avoid comparing your pace to others"],
-    quote: "Slow progress is still progress.",
-    celebrityParallel: "Emma Stone",
-    youreNotAlone: "41.1% of people with high stress report similar cautious engagement."
+    philosophy: "Steady steps build unshakable foundations.",
+    suggestions: {
+      immediate: "Break goals into micro-tasks.",
+      mediumTerm: "Track progress visually to see growth.",
+      mindset: "Value sustainability over speed."
+    },
+    celebrityParallel: "Emma Stone — navigated panic attacks early in life, choosing roles and routines that supported her mental health while building a successful career.",
+    whoElseWentThroughThis: "41.1% of people with high stress report similar cautious engagement."
   },
   {
     id: "insightful-ally",
@@ -163,10 +179,14 @@ export const riskProfiles: RiskProfile[] = [
       occupation: "Others"
     },
     narrative: "You see patterns others miss. Your awareness is a gift — it helps you support yourself and those around you.",
-    suggestions: ["Share insights with trusted peers", "keep learning", "use awareness to guide action"],
-    quote: "Awareness is the first step toward change.",
-    celebrityParallel: "Lady Gaga",
-    youreNotAlone: "52.2% of people with mental health history report habit changes."
+    philosophy: "Awareness without action is observation; awareness with action is transformation.",
+    suggestions: {
+      immediate: "Share one insight weekly with a trusted person.",
+      mediumTerm: "Use awareness to anticipate challenges.",
+      mindset: "See your insight as a tool for empowerment."
+    },
+    celebrityParallel: "Lady Gaga — transformed her experiences with PTSD and chronic pain into advocacy for kindness and mental health through the Born This Way Foundation.",
+    whoElseWentThroughThis: "52.2% of people with mental health history report habit changes."
   },
   {
     id: "flexible-link",
@@ -188,10 +208,14 @@ export const riskProfiles: RiskProfile[] = [
       occupation: "Others"
     },
     narrative: "You adapt easily and connect people, ideas, and opportunities. Change doesn't scare you — you work with it.",
-    suggestions: ["Use adaptability to create stability", "maintain a few core routines", "nurture connections"],
-    quote: "Flexibility is strength in motion.",
-    celebrityParallel: "Jim Carrey",
-    youreNotAlone: "40.7% of people report habit change within 30 days indoors."
+    philosophy: "Flexibility is the art of staying rooted while bending with the wind.",
+    suggestions: {
+      immediate: "Keep a core routine while experimenting with new activities.",
+      mediumTerm: "Build bridges between different social circles.",
+      mindset: "See change as a collaborator, not an enemy."
+    },
+    celebrityParallel: "Jim Carrey — shifted from comedic fame to painting and speaking openly about depression, embracing change as part of his identity.",
+    whoElseWentThroughThis: "40.7% of people report habit change within 30 days indoors."
   },
   {
     id: "steady-horizon",
@@ -213,10 +237,14 @@ export const riskProfiles: RiskProfile[] = [
       occupation: "Corporate"
     },
     narrative: "You've been on a long journey, and you keep moving forward. Your endurance is quiet but powerful.",
-    suggestions: ["Schedule rest", "protect personal time", "acknowledge your resilience"],
-    quote: "Rest is not a reward. It's a requirement.",
-    celebrityParallel: "Naomi Osaka",
-    youreNotAlone: "38.6% of people in extended isolation report work disengagement."
+    philosophy: "Endurance is not about never stopping; it's about starting again after every pause.",
+    suggestions: {
+      immediate: "Schedule intentional rest.",
+      mediumTerm: "Create a \"recovery plan\" for high-stress weeks.",
+      mindset: "See pauses as part of progress."
+    },
+    celebrityParallel: "Naomi Osaka — stepped back from tennis to protect her mental health, showing that rest can be a strategic choice.",
+    whoElseWentThroughThis: "38.6% of people in extended isolation report work disengagement."
   },
   {
     id: "open-bridge",
@@ -238,10 +266,14 @@ export const riskProfiles: RiskProfile[] = [
       occupation: "Corporate"
     },
     narrative: "You connect openly, building trust between yourself and others. Your openness is a strength.",
-    suggestions: ["Keep communication honest", "seek feedback", "share your story when safe"],
-    quote: "Connection is the energy between people.",
-    celebrityParallel: "Dwayne Johnson",
-    youreNotAlone: "Nearly half of those who seek treatment also report coping struggles."
+    philosophy: "Openness invites connection; connection invites healing.",
+    suggestions: {
+      immediate: "Initiate one honest conversation weekly.",
+      mediumTerm: "Build a support network.",
+      mindset: "Treat vulnerability as a bridge, not a risk."
+    },
+    celebrityParallel: "Dwayne Johnson — speaks candidly about depression, using openness to connect with millions.",
+    whoElseWentThroughThis: "Nearly half of those who seek treatment also report coping struggles."
   },
   {
     id: "heartfelt-voice",
@@ -263,10 +295,14 @@ export const riskProfiles: RiskProfile[] = [
       occupation: "Corporate"
     },
     narrative: "You speak from the heart, even when it's hard. Your authenticity inspires others.",
-    suggestions: ["Practice expressive writing", "join peer support groups", "share feelings without self-judgment"],
-    quote: "Vulnerability is strength.",
-    celebrityParallel: "Brené Brown",
-    youreNotAlone: "49.4% of people with treatment history report coping struggles."
+    philosophy: "Authenticity is the courage to be seen as you are.",
+    suggestions: {
+      immediate: "Practice expressive writing.",
+      mediumTerm: "Share feelings with a trusted group.",
+      mindset: "See honesty as a gift to yourself and others."
+    },
+    celebrityParallel: "Brené Brown — built a career on researching vulnerability and courage, showing how openness transforms relationships.",
+    whoElseWentThroughThis: "49.4% of people with treatment history report coping struggles."
   },
   {
     id: "agile-pathfinder",
@@ -288,10 +324,14 @@ export const riskProfiles: RiskProfile[] = [
       occupation: "Corporate"
     },
     narrative: "You adjust your course with skill, navigating change thoughtfully.",
-    suggestions: ["Keep a flexible plan", "monitor stress levels", "celebrate adaptability"],
-    quote: "Adaptability is about the powerful difference between reacting and responding.",
-    celebrityParallel: "Michelle Obama",
-    youreNotAlone: "Many report moderate stress while adapting to new habits."
+    philosophy: "Adaptability is choosing your response, not just reacting.",
+    suggestions: {
+      immediate: "Keep a flexible plan.",
+      mediumTerm: "Build \"pivot points\" into projects.",
+      mindset: "See change as a skill to master."
+    },
+    celebrityParallel: "Michelle Obama — adapted to public life while maintaining personal values and routines.",
+    whoElseWentThroughThis: "Many report moderate stress while adapting to new habits."
   },
   {
     id: "tireless-voyager",
@@ -313,10 +353,14 @@ export const riskProfiles: RiskProfile[] = [
       occupation: "Business"
     },
     narrative: "You keep going, even when the path is steep. Your drive is admirable, but rest matters too.",
-    suggestions: ["Schedule downtime", "delegate when possible", "avoid overcommitment"],
-    quote: "You can't pour from an empty cup.",
-    celebrityParallel: "Simone Biles",
-    youreNotAlone: "44.3% report growing stress within 14 days indoors."
+    philosophy: "Persistence without rest becomes depletion.",
+    suggestions: {
+      immediate: "Schedule downtime.",
+      mediumTerm: "Delegate tasks.",
+      mindset: "Value energy as much as effort."
+    },
+    celebrityParallel: "Simone Biles — withdrew from Olympic events to prioritize mental health, redefining success.",
+    whoElseWentThroughThis: "44.3% report growing stress within 14 days indoors."
   },
   {
     id: "grounded-visionary",
@@ -338,10 +382,14 @@ export const riskProfiles: RiskProfile[] = [
       occupation: "Business"
     },
     narrative: "You see the big picture and act with balance. Your vision is rooted in reality.",
-    suggestions: ["Keep goals realistic", "blend ambition with rest", "share your perspective"],
-    quote: "Vision without action is a dream.",
-    celebrityParallel: "Trevor Noah",
-    youreNotAlone: "32.2% of people with care awareness report habit change."
+    philosophy: "Vision grows best when planted in the soil of reality.",
+    suggestions: {
+      immediate: "Align goals with current resources.",
+      mediumTerm: "Share vision with collaborators.",
+      mindset: "Balance ambition with rest."
+    },
+    celebrityParallel: "Trevor Noah — navigated complex personal history to become a global storyteller.",
+    whoElseWentThroughThis: "32.2% of people with care awareness report habit change."
   },
   {
     id: "creative-rhythm",
@@ -363,10 +411,14 @@ export const riskProfiles: RiskProfile[] = [
       occupation: "Business"
     },
     narrative: "You thrive on innovation and change, finding new ways to grow.",
-    suggestions: ["Channel creativity into routines", "balance novelty with stability"],
-    quote: "Creativity is intelligence having fun.",
-    celebrityParallel: "Pharrell Williams",
-    youreNotAlone: "Many report habit change as a positive adaptation."
+    philosophy: "Creativity is the pulse of renewal.",
+    suggestions: {
+      immediate: "Schedule creative time.",
+      mediumTerm: "Blend novelty with stability.",
+      mindset: "See creativity as self-care."
+    },
+    celebrityParallel: "Pharrell Williams — uses music and design to express joy and emotional depth.",
+    whoElseWentThroughThis: "Many report habit change as a positive adaptation."
   },
   {
     id: "community-anchor",
@@ -388,11 +440,16 @@ export const riskProfiles: RiskProfile[] = [
       occupation: "Business"
     },
     narrative: "You're rooted in connection, offering stability to those around you.",
-    suggestions: ["Maintain social ties", "be present for others", "protect your own energy"],
-    quote: "We rise by lifting others.",
-    celebrityParallel: "Oprah Winfrey",
-    youreNotAlone: "Socially grounded individuals report lower stress levels."
+    philosophy: "We rise by lifting others.",
+    suggestions: {
+      immediate: "Maintain social ties.",
+      mediumTerm: "Offer support without overextending.",
+      mindset: "See community as mutual care."
+    },
+    celebrityParallel: "Oprah Winfrey — built a career on fostering connection and empowering others through authentic storytelling.",
+    whoElseWentThroughThis: "Socially grounded individuals report lower stress levels."
   },
+  // Fallback profiles for Homemaker category (using improved format but keeping original content until updated document is provided)
   {
     id: "quiet-pillar",
     name: "The Quiet Pillar",
@@ -413,10 +470,14 @@ export const riskProfiles: RiskProfile[] = [
       occupation: "Homemaker"
     },
     narrative: "You support others quietly, without seeking recognition.",
-    suggestions: ["Accept help when offered", "set boundaries", "practice self-care"],
-    quote: "Still waters run deep.",
-    celebrityParallel: "Michelle Obama",
-    youreNotAlone: "35.5% report low stress in moderate isolation."
+    philosophy: "Still waters run deep.",
+    suggestions: {
+      immediate: "Accept help when offered.",
+      mediumTerm: "Set boundaries to protect your energy.",
+      mindset: "Practice self-care as an act of strength."
+    },
+    celebrityParallel: "Michelle Obama — balanced family responsibilities with personal goals, showing quiet strength and determination.",
+    whoElseWentThroughThis: "35.5% report low stress in moderate isolation."
   },
   {
     id: "gentle-guardian",
@@ -438,10 +499,14 @@ export const riskProfiles: RiskProfile[] = [
       occupation: "Homemaker"
     },
     narrative: "You care deeply, even in solitude. Your empathy is a gift.",
-    suggestions: ["Stay connected virtually", "schedule self-care", "seek support when needed"],
-    quote: "Compassion is a verb.",
-    celebrityParallel: "Princess Diana",
-    youreNotAlone: "Many caregivers report stress during extended isolation."
+    philosophy: "Compassion is a verb.",
+    suggestions: {
+      immediate: "Stay connected virtually with loved ones.",
+      mediumTerm: "Schedule regular self-care activities.",
+      mindset: "Seek support when needed without guilt."
+    },
+    celebrityParallel: "Princess Diana — dedicated her life to caring for others while managing her own struggles with mental health.",
+    whoElseWentThroughThis: "Many caregivers report stress during extended isolation."
   },
   {
     id: "everyday-lighthouse",
@@ -463,10 +528,14 @@ export const riskProfiles: RiskProfile[] = [
       occupation: "Homemaker"
     },
     narrative: "You guide others through routine and calm presence.",
-    suggestions: ["Keep consistent habits", "offer guidance", "protect your own peace"],
-    quote: "Be a lighthouse, not a lifeboat.",
-    celebrityParallel: "Malala Yousafzai",
-    youreNotAlone: "Routine-based resilience is common among low-stress individuals."
+    philosophy: "Be a lighthouse, not a lifeboat.",
+    suggestions: {
+      immediate: "Keep consistent daily habits.",
+      mediumTerm: "Offer guidance when others seek it.",
+      mindset: "Protect your own peace while helping others."
+    },
+    celebrityParallel: "Malala Yousafzai — maintains unwavering commitment to education while caring for her own wellbeing.",
+    whoElseWentThroughThis: "Routine-based resilience is common among low-stress individuals."
   },
   {
     id: "thoughtful-horizon",
@@ -488,9 +557,13 @@ export const riskProfiles: RiskProfile[] = [
       occupation: "Homemaker"
     },
     narrative: "You look inward and forward, balancing reflection with hope.",
-    suggestions: ["Journal regularly", "set gentle goals", "practice mindfulness"],
-    quote: "Knowing yourself is the beginning of all wisdom.",
-    celebrityParallel: "Lady Gaga",
-    youreNotAlone: "Many report habit change alongside self-reflection."
+    philosophy: "Knowing yourself is the beginning of all wisdom.",
+    suggestions: {
+      immediate: "Journal regularly to process thoughts.",
+      mediumTerm: "Set gentle, achievable goals.",
+      mindset: "Practice mindfulness and self-reflection."
+    },
+    celebrityParallel: "Lady Gaga — uses self-reflection and personal experiences to create meaningful art and advocacy.",
+    whoElseWentThroughThis: "Many report habit change alongside self-reflection."
   }
 ];

@@ -26,10 +26,10 @@ export function ProfileCard({ profile, onViewDetails }: ProfileCardProps) {
       </CardHeader>
       
       <CardContent className="space-y-6">
-        {/* Quote */}
+        {/* Philosophy */}
         <div className="bg-primary/5 p-4 rounded-md border-l-4 border-primary">
           <Quote className="h-5 w-5 text-primary mb-2" />
-          <p className="font-medium text-primary">{profile.quote}</p>
+          <p className="font-medium text-primary italic">"{profile.philosophy}"</p>
         </div>
 
         {/* Key Signals */}
@@ -61,14 +61,15 @@ export function ProfileCard({ profile, onViewDetails }: ProfileCardProps) {
             You're in good company
           </h4>
           <p className="text-sm text-muted-foreground">
-            Similar journey as <span className="font-medium">{profile.celebrityParallel}</span>
+            {profile.celebrityParallel}
           </p>
         </div>
 
-        {/* Statistics */}
+        {/* Who Else Went Through This */}
         <div className="bg-accent/20 p-4 rounded-md">
+          <h4 className="font-semibold mb-2 text-sm">Who else went through this?</h4>
           <p className="text-sm text-muted-foreground">
-            <strong>You're not alone:</strong> {profile.youreNotAlone}
+            {profile.whoElseWentThroughThis}
           </p>
         </div>
 
