@@ -280,8 +280,8 @@ export function AssessmentForm({ onSubmit, onBack }: AssessmentFormProps) {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
+                          <SelectItem value="Go out every day">Go out every day</SelectItem>
                           <SelectItem value="1-14 days">1-14 days</SelectItem>
-                          <SelectItem value="15+ days">15+ days</SelectItem>
                           <SelectItem value="15-30 days">15-30 days</SelectItem>
                           <SelectItem value="31-60 days">31-60 days</SelectItem>
                           <SelectItem value="60+ days">60+ days</SelectItem>

@@ -17,11 +17,11 @@ export function ProfileCard({ profile, onViewDetails }: ProfileCardProps) {
         <div>
           <CardTitle className="text-2xl">{profile.name}</CardTitle>
           <CardDescription className="text-lg italic mt-2">
-            "{profile.emotionalNarrative}"
+            "{profile.narrative}"
           </CardDescription>
         </div>
         <Badge variant="secondary" className="w-fit mx-auto">
-          {profile.occupation.join(", ")} Profile
+          {profile.criteria.occupation} Profile
         </Badge>
       </CardHeader>
       
@@ -36,14 +36,21 @@ export function ProfileCard({ profile, onViewDetails }: ProfileCardProps) {
         <div>
           <h4 className="font-semibold mb-2 flex items-center gap-2">
             <TrendingUp className="h-4 w-4" />
-            Key Indicators
+            Profile Characteristics
           </h4>
           <div className="flex flex-wrap gap-2">
-            {profile.keySignals.map((signal, index) => (
-              <Badge key={index} variant="outline" className="text-xs">
-                {signal}
-              </Badge>
-            ))}
+            <Badge variant="outline" className="text-xs">
+              {profile.criteria.occupation}
+            </Badge>
+            <Badge variant="outline" className="text-xs">
+              Stress: {profile.criteria.stress}
+            </Badge>
+            <Badge variant="outline" className="text-xs">
+              Treatment: {profile.criteria.treatment}
+            </Badge>
+            <Badge variant="outline" className="text-xs">
+              Days Indoors: {profile.criteria.days_indoors}
+            </Badge>
           </div>
         </div>
 

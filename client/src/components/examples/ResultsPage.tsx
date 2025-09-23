@@ -4,7 +4,7 @@ import { riskProfiles } from '@shared/schema'
 export default function ResultsPageExample() {
   return (
     <ResultsPage 
-      profile={riskProfiles[1]} // Overwhelmed Achiever
+      profile={riskProfiles[2]} // The Careful Climber
       onStartOver={() => console.log('Starting over...')}
     />
   )

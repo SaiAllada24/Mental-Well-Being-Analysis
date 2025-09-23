@@ -25,7 +25,7 @@ export const assessmentSchema = z.object({
   self_employed: z.enum(["Yes", "No", "NaN"]),
   family_history: z.enum(["Yes", "No"]),
   treatment: z.enum(["Yes", "No"]),
-  days_indoors: z.enum(["1-14 days", "15+ days", "15-30 days", "31-60 days", "60+ days"]),
+  days_indoors: z.enum(["1-14 days", "15-30 days", "31-60 days", "60+ days", "Go out every day"]),
   growing_stress: z.enum(["Yes", "No"]),
   changes_habits: z.enum(["Yes", "No"]),
   mental_health_history: z.enum(["Yes", "No"]),
@@ -39,149 +39,458 @@ export const assessmentSchema = z.object({
 
 export type AssessmentData = z.infer<typeof assessmentSchema>;
 
+export interface ProfileCriteria {
+  gender: "Any" | "Male" | "Female" | "Other";
+  stress: "Yes" | "No";
+  coping_struggles: "Yes" | "No";
+  work_interest_loss: "Yes" | "No";
+  social_weakness: "Yes" | "No";
+  interview_comfort: "Yes" | "No";
+  care_awareness: "Yes" | "No" | "Not sure";
+  mental_health_history: "Yes" | "No";
+  habit_change: "Yes" | "No";
+  mood_swings: "Low" | "Medium" | "High";
+  treatment: "Yes" | "No";
+  days_indoors: "1-14" | "15-30" | "31-60" | ">60" | "Go out every day";
+  occupation: "Student" | "Others" | "Corporate" | "Business" | "Homemaker";
+}
+
 export interface RiskProfile {
   id: string;
   name: string;
   emoji: string;
-  occupation: string[];
-  keySignals: string[];
-  emotionalNarrative: string;
+  criteria: ProfileCriteria;
+  narrative: string;
   suggestions: string[];
   quote: string;
   celebrityParallel: string;
   youreNotAlone: string;
-  expandedNarrative: string;
 }
 
 export const riskProfiles: RiskProfile[] = [
   {
-    id: "corporate-burnout",
-    name: "The Corporate Burnout",
-    emoji: "🧱",
-    occupation: ["Corporate"],
-    keySignals: ["Stress = Yes", "Coping = Yes", "Indoors > 60"],
-    emotionalNarrative: "You've been carrying silent pressure. You're not weak — you're worn.",
-    suggestions: ["Block reflection time weekly", "Say 'I need time'"],
-    quote: "Rest is not a reward. It's a requirement.",
-    celebrityParallel: "Naomi Osaka",
-    youreNotAlone: "38.6% of corporate professionals indoors >60 days report work interest loss",
-    expandedNarrative: "You're in a structured role, often high-pressure, and you've been indoors far too long. You're coping, but barely. You may feel emotionally numb, fatigued, or disconnected from your work. This profile reflects silent burnout — the kind that builds slowly and invisibly."
-  },
-  {
-    id: "overwhelmed-achiever",
-    name: "The Overwhelmed Achiever",
-    emoji: "🌪",
-    occupation: ["Business"],
-    keySignals: ["Stress = Yes", "Habit Change = Yes", "Work Interest = No"],
-    emotionalNarrative: "You push through everything — even when it hurts.",
-    suggestions: ["Micro-breaks", "journaling", "reduce overcommitment"],
-    quote: "You can't pour from an empty cup.",
-    celebrityParallel: "Simone Biles",
-    youreNotAlone: "44.3% of business professionals report growing stress within 14 days indoors",
-    expandedNarrative: "You're driven, ambitious, and constantly adapting — but it's taking a toll. You've lost interest in work, your habits are shifting, and stress is mounting. You may feel like you're failing, but you're simply overloaded."
-  },
-  {
-    id: "quiet-responder",
-    name: "The Quiet Responder",
-    emoji: "🌿",
-    occupation: ["Homemaker"],
-    keySignals: ["Stress = No", "Social Weakness = No", "Indoors = 15–30"],
-    emotionalNarrative: "You're steady, but quiet. You keep things together.",
-    suggestions: ["Light social engagement", "gratitude journaling"],
-    quote: "Still waters run deep.",
-    celebrityParallel: "Michelle Obama",
-    youreNotAlone: "35.5% of homemakers report indoor time of 15–30 days with low stress",
-    expandedNarrative: "You're emotionally steady and socially grounded. You may not feel overwhelmed, but you're quietly absorbing stress. You're the type who supports others — often without asking for help yourself."
-  },
-  {
-    id: "self-aware-seeker",
-    name: "The Self-Aware Seeker",
-    emoji: "🔍",
-    occupation: ["Others"],
-    keySignals: ["Care Awareness = Yes", "Mental Health History = Yes"],
-    emotionalNarrative: "You've faced storms before. You're seeking clarity.",
-    suggestions: ["Explore therapy", "read mental health blogs"],
-    quote: "Knowing yourself is the beginning of all wisdom.",
-    celebrityParallel: "Lady Gaga",
-    youreNotAlone: "52.2% of 'Others' with mental health history report habit change",
-    expandedNarrative: "You've experienced mental health challenges before, and you're actively seeking clarity. You're reflective, informed, and emotionally literate. You may feel stuck, but you're also equipped to move forward."
-  },
-  {
-    id: "socially-isolated",
-    name: "The Socially Isolated",
-    emoji: "🕸",
-    occupation: ["Student"],
-    keySignals: ["Social Weakness = Yes", "Indoors > 60", "Interview = No"],
-    emotionalNarrative: "You feel unseen. But your silence is a signal.",
-    suggestions: ["Join low-pressure community", "track one habit"],
-    quote: "You are not alone, even when it feels like it.",
-    celebrityParallel: "Selena Gomez",
-    youreNotAlone: "28.7% of students indoors >2 months report work interest loss",
-    expandedNarrative: "You feel disconnected — from people, from work, from yourself. You may struggle to speak up or ask for help. This profile reflects emotional invisibility, often masked by silence."
-  },
-  {
-    id: "habitual-adapter",
-    name: "The Habitual Adapter",
-    emoji: "🔄",
-    occupation: ["Business"],
-    keySignals: ["Habit Change = Yes", "Stress = Moderate", "Treatment = No"],
-    emotionalNarrative: "You adapt fast — sometimes too fast.",
-    suggestions: ["Anchor routines", "reduce digital overload"],
-    quote: "Change is hard at first, messy in the middle…",
-    celebrityParallel: "Jim Carrey",
-    youreNotAlone: "40.7% of business professionals report habit change at 15–30 days indoors",
-    expandedNarrative: "You're flexible, but it's exhausting. You change routines often, but struggle to anchor emotionally. You may feel reactive, scattered, or overstimulated."
-  },
-  {
-    id: "expressive-empath",
-    name: "The Expressive Empath",
-    emoji: "💬",
-    occupation: ["Corporate"],
-    keySignals: ["Interview = Yes", "Treatment = Yes"],
-    emotionalNarrative: "You speak your truth. You seek help.",
-    suggestions: ["Peer support", "expressive writing"],
-    quote: "Vulnerability is strength.",
-    celebrityParallel: "Dwayne Johnson",
-    youreNotAlone: "49.4% of corporate workers with treatment history report coping struggles",
-    expandedNarrative: "You're emotionally open and proactive. You've sought help, and you're comfortable talking about it. You may still struggle, but you're not afraid to feel."
-  },
-  {
-    id: "resilient-realist",
-    name: "The Resilient Realist",
-    emoji: "🧭",
-    occupation: ["Homemaker"],
-    keySignals: ["Stress = No", "Mood Swings = Low", "Care Awareness = Yes"],
-    emotionalNarrative: "You've built resilience through routine.",
-    suggestions: ["Maintain routines", "support others"],
-    quote: "Resilience is built, not born.",
-    celebrityParallel: "Trevor Noah",
-    youreNotAlone: "32.2% of homemakers with care awareness report habit change",
-    expandedNarrative: "You're grounded, emotionally balanced, and proactive. You've built resilience through routine and reflection. You may not need urgent help — but you're a quiet pillar for others."
-  },
-  {
-    id: "interview-avoider",
-    name: "The Interview Avoider",
-    emoji: "🔒",
-    occupation: ["Others"],
-    keySignals: ["Interview = No", "Stress = Yes", "Work Interest = Yes"],
-    emotionalNarrative: "You avoid the spotlight to protect yourself.",
-    suggestions: ["Practice small disclosures", "affirm boundaries"],
-    quote: "Courage doesn't always roar.",
-    celebrityParallel: "Emma Stone",
-    youreNotAlone: "41.1% of 'Others' report stress at 15–30 days indoors",
-    expandedNarrative: "You avoid mental health conversations — not out of denial, but self-protection. You may fear judgment or feel unsafe expressing vulnerability. This profile reflects guarded resilience."
-  },
-  {
-    id: "history-holder",
-    name: "The History Holder",
-    emoji: "🧠",
-    occupation: ["Student"],
-    keySignals: ["Mental Health History = Yes", "Coping = Yes", "Mood Swings = High"],
-    emotionalNarrative: "You've been here before. You're learning to rewrite the story.",
-    suggestions: ["Track triggers", "build support rituals"],
+    id: "story-weaver",
+    name: "The Story Weaver",
+    emoji: "📖",
+    criteria: {
+      gender: "Any",
+      stress: "Yes",
+      coping_struggles: "Yes",
+      work_interest_loss: "Yes",
+      social_weakness: "No",
+      interview_comfort: "No",
+      care_awareness: "Yes",
+      mental_health_history: "Yes",
+      habit_change: "Yes",
+      mood_swings: "High",
+      treatment: "No",
+      days_indoors: ">60",
+      occupation: "Student"
+    },
+    narrative: "You carry experiences like chapters — some heavy, some hopeful. You've been here before, and you're learning to shape new endings.",
+    suggestions: ["Track emotional triggers", "build small daily rituals", "celebrate incremental wins"],
     quote: "Healing is not linear.",
     celebrityParallel: "Demi Lovato",
-    youreNotAlone: "42.5% of students with mental health history report growing stress",
-    expandedNarrative: "You've lived with mental health challenges. You know the patterns, and you're trying to rewrite them. You may feel overwhelmed, but you're also deeply self-aware."
+    youreNotAlone: "42.5% of people with a mental health history report growing stress."
+  },
+  {
+    id: "rising-voice",
+    name: "The Rising Voice",
+    emoji: "🎤",
+    criteria: {
+      gender: "Any",
+      stress: "No",
+      coping_struggles: "No",
+      work_interest_loss: "No",
+      social_weakness: "No",
+      interview_comfort: "Yes",
+      care_awareness: "Yes",
+      mental_health_history: "No",
+      habit_change: "No",
+      mood_swings: "Medium",
+      treatment: "Yes",
+      days_indoors: "15-30",
+      occupation: "Student"
+    },
+    narrative: "You're finding your words and your courage. Speaking up feels new, but each time you do, you strengthen your voice.",
+    suggestions: ["Join a safe discussion space", "practice sharing one thought daily", "seek mentorship"],
+    quote: "Your voice is your power.",
+    celebrityParallel: "Selena Gomez",
+    youreNotAlone: "Nearly half of those comfortable discussing mental health also seek treatment."
+  },
+  {
+    id: "careful-climber",
+    name: "The Careful Climber",
+    emoji: "🧗",
+    criteria: {
+      gender: "Any",
+      stress: "Yes",
+      coping_struggles: "Yes",
+      work_interest_loss: "Yes",
+      social_weakness: "Yes",
+      interview_comfort: "No",
+      care_awareness: "No",
+      mental_health_history: "No",
+      habit_change: "No",
+      mood_swings: "Medium",
+      treatment: "No",
+      days_indoors: "31-60",
+      occupation: "Others"
+    },
+    narrative: "You move forward with intention, weighing each step. Progress is steady, even if cautious.",
+    suggestions: ["Set achievable goals", "acknowledge small victories", "avoid comparing your pace to others"],
+    quote: "Slow progress is still progress.",
+    celebrityParallel: "Emma Stone",
+    youreNotAlone: "41.1% of people with high stress report similar cautious engagement."
+  },
+  {
+    id: "insightful-ally",
+    name: "The Insightful Ally",
+    emoji: "🔍",
+    criteria: {
+      gender: "Any",
+      stress: "No",
+      coping_struggles: "No",
+      work_interest_loss: "No",
+      social_weakness: "No",
+      interview_comfort: "Yes",
+      care_awareness: "Yes",
+      mental_health_history: "Yes",
+      habit_change: "Yes",
+      mood_swings: "Low",
+      treatment: "Yes",
+      days_indoors: "15-30",
+      occupation: "Others"
+    },
+    narrative: "You see patterns others miss. Your awareness is a gift — it helps you support yourself and those around you.",
+    suggestions: ["Share insights with trusted peers", "keep learning", "use awareness to guide action"],
+    quote: "Awareness is the first step toward change.",
+    celebrityParallel: "Lady Gaga",
+    youreNotAlone: "52.2% of people with mental health history report habit changes."
+  },
+  {
+    id: "flexible-link",
+    name: "The Flexible Link",
+    emoji: "🔗",
+    criteria: {
+      gender: "Any",
+      stress: "No",
+      coping_struggles: "No",
+      work_interest_loss: "No",
+      social_weakness: "No",
+      interview_comfort: "Yes",
+      care_awareness: "Yes",
+      mental_health_history: "No",
+      habit_change: "Yes",
+      mood_swings: "Medium",
+      treatment: "No",
+      days_indoors: "Go out every day",
+      occupation: "Others"
+    },
+    narrative: "You adapt easily and connect people, ideas, and opportunities. Change doesn't scare you — you work with it.",
+    suggestions: ["Use adaptability to create stability", "maintain a few core routines", "nurture connections"],
+    quote: "Flexibility is strength in motion.",
+    celebrityParallel: "Jim Carrey",
+    youreNotAlone: "40.7% of people report habit change within 30 days indoors."
+  },
+  {
+    id: "steady-horizon",
+    name: "The Steady Horizon",
+    emoji: "🏔️",
+    criteria: {
+      gender: "Any",
+      stress: "Yes",
+      coping_struggles: "Yes",
+      work_interest_loss: "Yes",
+      social_weakness: "No",
+      interview_comfort: "No",
+      care_awareness: "Not sure",
+      mental_health_history: "Yes",
+      habit_change: "No",
+      mood_swings: "High",
+      treatment: "No",
+      days_indoors: ">60",
+      occupation: "Corporate"
+    },
+    narrative: "You've been on a long journey, and you keep moving forward. Your endurance is quiet but powerful.",
+    suggestions: ["Schedule rest", "protect personal time", "acknowledge your resilience"],
+    quote: "Rest is not a reward. It's a requirement.",
+    celebrityParallel: "Naomi Osaka",
+    youreNotAlone: "38.6% of people in extended isolation report work disengagement."
+  },
+  {
+    id: "open-bridge",
+    name: "The Open Bridge",
+    emoji: "🌉",
+    criteria: {
+      gender: "Any",
+      stress: "No",
+      coping_struggles: "No",
+      work_interest_loss: "No",
+      social_weakness: "No",
+      interview_comfort: "Yes",
+      care_awareness: "Yes",
+      mental_health_history: "No",
+      habit_change: "No",
+      mood_swings: "Low",
+      treatment: "Yes",
+      days_indoors: "15-30",
+      occupation: "Corporate"
+    },
+    narrative: "You connect openly, building trust between yourself and others. Your openness is a strength.",
+    suggestions: ["Keep communication honest", "seek feedback", "share your story when safe"],
+    quote: "Connection is the energy between people.",
+    celebrityParallel: "Dwayne Johnson",
+    youreNotAlone: "Nearly half of those who seek treatment also report coping struggles."
+  },
+  {
+    id: "heartfelt-voice",
+    name: "The Heartfelt Voice",
+    emoji: "💖",
+    criteria: {
+      gender: "Any",
+      stress: "Yes",
+      coping_struggles: "No",
+      work_interest_loss: "No",
+      social_weakness: "No",
+      interview_comfort: "Yes",
+      care_awareness: "Yes",
+      mental_health_history: "Yes",
+      habit_change: "No",
+      mood_swings: "Medium",
+      treatment: "Yes",
+      days_indoors: "31-60",
+      occupation: "Corporate"
+    },
+    narrative: "You speak from the heart, even when it's hard. Your authenticity inspires others.",
+    suggestions: ["Practice expressive writing", "join peer support groups", "share feelings without self-judgment"],
+    quote: "Vulnerability is strength.",
+    celebrityParallel: "Brené Brown",
+    youreNotAlone: "49.4% of people with treatment history report coping struggles."
+  },
+  {
+    id: "agile-pathfinder",
+    name: "The Agile Pathfinder",
+    emoji: "🧭",
+    criteria: {
+      gender: "Any",
+      stress: "No",
+      coping_struggles: "Yes",
+      work_interest_loss: "No",
+      social_weakness: "No",
+      interview_comfort: "Yes",
+      care_awareness: "Not sure",
+      mental_health_history: "No",
+      habit_change: "Yes",
+      mood_swings: "Medium",
+      treatment: "No",
+      days_indoors: "15-30",
+      occupation: "Corporate"
+    },
+    narrative: "You adjust your course with skill, navigating change thoughtfully.",
+    suggestions: ["Keep a flexible plan", "monitor stress levels", "celebrate adaptability"],
+    quote: "Adaptability is about the powerful difference between reacting and responding.",
+    celebrityParallel: "Michelle Obama",
+    youreNotAlone: "Many report moderate stress while adapting to new habits."
+  },
+  {
+    id: "tireless-voyager",
+    name: "The Tireless Voyager",
+    emoji: "⛵",
+    criteria: {
+      gender: "Any",
+      stress: "Yes",
+      coping_struggles: "Yes",
+      work_interest_loss: "Yes",
+      social_weakness: "No",
+      interview_comfort: "No",
+      care_awareness: "No",
+      mental_health_history: "No",
+      habit_change: "Yes",
+      mood_swings: "High",
+      treatment: "No",
+      days_indoors: "1-14",
+      occupation: "Business"
+    },
+    narrative: "You keep going, even when the path is steep. Your drive is admirable, but rest matters too.",
+    suggestions: ["Schedule downtime", "delegate when possible", "avoid overcommitment"],
+    quote: "You can't pour from an empty cup.",
+    celebrityParallel: "Simone Biles",
+    youreNotAlone: "44.3% report growing stress within 14 days indoors."
+  },
+  {
+    id: "grounded-visionary",
+    name: "The Grounded Visionary",
+    emoji: "🎯",
+    criteria: {
+      gender: "Any",
+      stress: "No",
+      coping_struggles: "No",
+      work_interest_loss: "No",
+      social_weakness: "No",
+      interview_comfort: "Yes",
+      care_awareness: "Yes",
+      mental_health_history: "No",
+      habit_change: "No",
+      mood_swings: "Low",
+      treatment: "No",
+      days_indoors: "15-30",
+      occupation: "Business"
+    },
+    narrative: "You see the big picture and act with balance. Your vision is rooted in reality.",
+    suggestions: ["Keep goals realistic", "blend ambition with rest", "share your perspective"],
+    quote: "Vision without action is a dream.",
+    celebrityParallel: "Trevor Noah",
+    youreNotAlone: "32.2% of people with care awareness report habit change."
+  },
+  {
+    id: "creative-rhythm",
+    name: "The Creative Rhythm",
+    emoji: "🎨",
+    criteria: {
+      gender: "Any",
+      stress: "No",
+      coping_struggles: "No",
+      work_interest_loss: "No",
+      social_weakness: "No",
+      interview_comfort: "Yes",
+      care_awareness: "Yes",
+      mental_health_history: "No",
+      habit_change: "Yes",
+      mood_swings: "Medium",
+      treatment: "Yes",
+      days_indoors: "Go out every day",
+      occupation: "Business"
+    },
+    narrative: "You thrive on innovation and change, finding new ways to grow.",
+    suggestions: ["Channel creativity into routines", "balance novelty with stability"],
+    quote: "Creativity is intelligence having fun.",
+    celebrityParallel: "Pharrell Williams",
+    youreNotAlone: "Many report habit change as a positive adaptation."
+  },
+  {
+    id: "community-anchor",
+    name: "The Community Anchor",
+    emoji: "⚓",
+    criteria: {
+      gender: "Any",
+      stress: "No",
+      coping_struggles: "No",
+      work_interest_loss: "No",
+      social_weakness: "No",
+      interview_comfort: "Yes",
+      care_awareness: "Yes",
+      mental_health_history: "No",
+      habit_change: "No",
+      mood_swings: "Low",
+      treatment: "No",
+      days_indoors: "15-30",
+      occupation: "Business"
+    },
+    narrative: "You're rooted in connection, offering stability to those around you.",
+    suggestions: ["Maintain social ties", "be present for others", "protect your own energy"],
+    quote: "We rise by lifting others.",
+    celebrityParallel: "Oprah Winfrey",
+    youreNotAlone: "Socially grounded individuals report lower stress levels."
+  },
+  {
+    id: "quiet-pillar",
+    name: "The Quiet Pillar",
+    emoji: "🏛️",
+    criteria: {
+      gender: "Any",
+      stress: "No",
+      coping_struggles: "No",
+      work_interest_loss: "No",
+      social_weakness: "No",
+      interview_comfort: "No",
+      care_awareness: "Yes",
+      mental_health_history: "No",
+      habit_change: "No",
+      mood_swings: "Low",
+      treatment: "No",
+      days_indoors: "15-30",
+      occupation: "Homemaker"
+    },
+    narrative: "You support others quietly, without seeking recognition.",
+    suggestions: ["Accept help when offered", "set boundaries", "practice self-care"],
+    quote: "Still waters run deep.",
+    celebrityParallel: "Michelle Obama",
+    youreNotAlone: "35.5% report low stress in moderate isolation."
+  },
+  {
+    id: "gentle-guardian",
+    name: "The Gentle Guardian",
+    emoji: "🛡️",
+    criteria: {
+      gender: "Any",
+      stress: "Yes",
+      coping_struggles: "Yes",
+      work_interest_loss: "No",
+      social_weakness: "Yes",
+      interview_comfort: "No",
+      care_awareness: "Yes",
+      mental_health_history: "No",
+      habit_change: "No",
+      mood_swings: "Medium",
+      treatment: "No",
+      days_indoors: ">60",
+      occupation: "Homemaker"
+    },
+    narrative: "You care deeply, even in solitude. Your empathy is a gift.",
+    suggestions: ["Stay connected virtually", "schedule self-care", "seek support when needed"],
+    quote: "Compassion is a verb.",
+    celebrityParallel: "Princess Diana",
+    youreNotAlone: "Many caregivers report stress during extended isolation."
+  },
+  {
+    id: "everyday-lighthouse",
+    name: "The Everyday Lighthouse",
+    emoji: "🗼",
+    criteria: {
+      gender: "Any",
+      stress: "No",
+      coping_struggles: "No",
+      work_interest_loss: "No",
+      social_weakness: "No",
+      interview_comfort: "Yes",
+      care_awareness: "Yes",
+      mental_health_history: "No",
+      habit_change: "No",
+      mood_swings: "Low",
+      treatment: "No",
+      days_indoors: "15-30",
+      occupation: "Homemaker"
+    },
+    narrative: "You guide others through routine and calm presence.",
+    suggestions: ["Keep consistent habits", "offer guidance", "protect your own peace"],
+    quote: "Be a lighthouse, not a lifeboat.",
+    celebrityParallel: "Malala Yousafzai",
+    youreNotAlone: "Routine-based resilience is common among low-stress individuals."
+  },
+  {
+    id: "thoughtful-horizon",
+    name: "The Thoughtful Horizon",
+    emoji: "🌅",
+    criteria: {
+      gender: "Any",
+      stress: "No",
+      coping_struggles: "No",
+      work_interest_loss: "No",
+      social_weakness: "No",
+      interview_comfort: "Yes",
+      care_awareness: "Yes",
+      mental_health_history: "Yes",
+      habit_change: "Yes",
+      mood_swings: "Medium",
+      treatment: "No",
+      days_indoors: "31-60",
+      occupation: "Homemaker"
+    },
+    narrative: "You look inward and forward, balancing reflection with hope.",
+    suggestions: ["Journal regularly", "set gentle goals", "practice mindfulness"],
+    quote: "Knowing yourself is the beginning of all wisdom.",
+    celebrityParallel: "Lady Gaga",
+    youreNotAlone: "Many report habit change alongside self-reflection."
   }
 ];
