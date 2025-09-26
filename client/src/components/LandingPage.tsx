@@ -17,7 +17,7 @@ export function LandingPage({ onStartAssessment }: LandingPageProps) {
               Mental Health Risk
               <span className="text-primary block">Profiling</span>
             </h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">Assessment tool that evaluates key indicators to provide personalized risk profiles and wellness recommendations.</p>
+            <p className="text-muted-foreground max-w-2xl mx-auto text-[16px]">Assessment tool that evaluates key indicators to provide personalized risk profiles and wellness recommendations.</p>
           </div>
           
           <Button 
