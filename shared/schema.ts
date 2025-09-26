@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { pgTable, text, varchar } from "drizzle-orm/pg-core";
+import { pgTable, text, varchar, timestamp, integer, real, json } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -16,6 +16,144 @@ export const insertUserSchema = createInsertSchema(users).pick({
 
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
+
+// User Profiles for Anonymous Tracking
+export const userProfiles = pgTable("user_profiles", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  anonymousId: varchar("anonymous_id").notNull().unique(), // Client-generated UUID for privacy
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  lastActiveAt: timestamp("last_active_at").defaultNow().notNull(),
+});
+
+// Assessment Sessions - Individual assessment records
+export const assessmentSessions = pgTable("assessment_sessions", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userProfileId: varchar("user_profile_id").references(() => userProfiles.id).notNull(),
+  assessmentData: json("assessment_data").notNull(), // Raw assessment answers
+  profileId: varchar("profile_id").notNull(), // Matched risk profile ID
+  eriScore: real("eri_score").notNull(), // 0-100 ERI score
+  riskLevel: varchar("risk_level").notNull(), // Low, Medium, High
+  subScores: json("sub_scores").notNull(), // Individual component scores
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+// Risk Metrics for Aggregate Statistics
+export const riskMetrics = pgTable("risk_metrics", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  profileId: varchar("profile_id").notNull(),
+  gender: varchar("gender").notNull(),
+  occupation: varchar("occupation").notNull(),
+  avgEriScore: real("avg_eri_score").notNull(),
+  totalSessions: integer("total_sessions").notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const insertUserProfileSchema = createInsertSchema(userProfiles).pick({
+  anonymousId: true,
+});
+
+export const insertAssessmentSessionSchema = createInsertSchema(assessmentSessions).pick({
+  userProfileId: true,
+  assessmentData: true,
+  profileId: true,
+  eriScore: true,
+  riskLevel: true,
+  subScores: true,
+});
+
+export type InsertUserProfile = z.infer<typeof insertUserProfileSchema>;
+export type UserProfile = typeof userProfiles.$inferSelect;
+export type InsertAssessmentSession = z.infer<typeof insertAssessmentSessionSchema>;
+export type AssessmentSession = typeof assessmentSessions.$inferSelect;
+export type RiskMetric = typeof riskMetrics.$inferSelect;
+
+// ERI Scoring Types
+export interface ERIWeights {
+  stress: 0.25;
+  copingStruggles: 0.20;
+  habitChange: 0.15;
+  moodSwings: 0.15;
+  workInterestLoss: 0.10;
+  socialWeakness: 0.10;
+  daysIndoors: 0.05;
+}
+
+export interface ERISubScores {
+  stress: number;          // 0-1 normalized
+  copingStruggles: number; // 0-1 normalized
+  habitChange: number;     // 0-1 normalized
+  moodSwings: number;      // 0-1 normalized (Low=0, Medium=0.5, High=1)
+  workInterestLoss: number; // 0-1 normalized
+  socialWeakness: number;  // 0-1 normalized
+  daysIndoors: number;     // 0-1 normalized (Go out every day=0, 1-14=0.25, 15-30=0.5, 31-60=0.75, >60=1)
+}
+
+export interface ERIResult {
+  eriScore: number;        // 0-100 final score
+  riskLevel: "Low" | "Medium" | "High";
+  subScores: ERISubScores;
+  profileMatch: RiskProfile;
+  comparisonStats?: {
+    avgForProfile: number;
+    avgForDemographic: number;
+    percentileRank: number;
+  };
+}
+
+// Adaptive Suggestions Types
+export interface AdaptiveSuggestion {
+  immediate: string;
+  mediumTerm: string;
+  mindset: string;
+  theme: "Social" | "Emotional" | "Routine" | "Cognitive";
+  resources?: ResourceLink[];
+}
+
+export interface ResourceLink {
+  type: "Article" | "App" | "Helpline" | "Video" | "Book";
+  title: string;
+  url: string;
+  description: string;
+  region?: string; // For location-specific resources
+}
+
+// Progress Tracking Types
+export interface UserProgress {
+  currentStreak: number;
+  totalAssessments: number;
+  improvementScore: number; // Change in ERI over time
+  trendsData: {
+    dates: string[];
+    eriScores: number[];
+    riskLevels: string[];
+  };
+  achievements: UserAchievement[];
+}
+
+export interface UserAchievement {
+  id: string;
+  title: string;
+  description: string;
+  dateEarned: string;
+  badgeEmoji: string;
+}
+
+// Anonymous Benchmarking Types
+export interface BenchmarkData {
+  globalAverage: number;
+  profileAverage: number;
+  demographicAverage: {
+    gender: number;
+    occupation: number;
+    combined: number;
+  };
+  distributionPercentiles: {
+    p25: number;
+    p50: number;
+    p75: number;
+    p90: number;
+  };
+}
 
 // Mental Health Assessment Schema
 export const assessmentSchema = z.object({

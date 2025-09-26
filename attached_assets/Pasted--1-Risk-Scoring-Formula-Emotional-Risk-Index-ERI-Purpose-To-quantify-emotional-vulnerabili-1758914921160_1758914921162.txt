@@ -1,0 +1,130 @@
+🔹 1. Risk Scoring Formula — Emotional Risk Index (ERI)
+🎯 Purpose
+To quantify emotional vulnerability across multiple dimensions and express it as a score (0–100), then bucket into Low / Medium / High.
+
+🧮 Formula Structure
+Let’s define weights for each signal based on impact:
+
+Signal	Weight
+Stress	0.25
+Coping Struggles	0.20
+Habit Change	0.15
+Mood Swings	0.15
+Work Interest Loss	0.10
+Social Weakness	0.10
+Days Indoors	0.05
+🧠 Scoring Logic
+Each signal is scored on a normalized scale (0–1):
+
+Binary signals (Yes/No): Yes = 1, No = 0
+
+Mood Swings: Low = 0, Medium = 0.5, High = 1
+
+Days Indoors:
+
+Go out every day = 0
+
+1–14 = 0.25
+
+15–30 = 0.5
+
+31–60 = 0.75
+
+🧮 Final Calculation
+text
+ERI = ∑(Signal Score × Weight)
+ERI × 100 → Final Score (0–100)
+🧭 Risk Buckets
+ERI Score	Risk Level
+0–33	Low
+34–66	Medium
+67–100	High
+🔹 2. Adaptive Suggestions — Logic Tree
+🎯 Purpose
+To generate personalized “Immediate Action” and “Medium-Term Goal” based on:
+
+Gender
+
+Occupation
+
+Days Indoors
+
+Risk Level
+
+🌳 Logic Tree Structure
+Example Branch:
+Gender: Female Occupation: Homemaker Days Indoors: >60 Risk Level: High
+
+→ Immediate Action: “Schedule a virtual check-in with a friend or relative this week. Choose someone who listens without judgment.”
+
+Medium-Term Goal: “Explore community-based support apps or local women’s wellness circles. Rebuild social rhythm gently.”
+
+Another Branch:
+Gender: Male Occupation: Corporate Days Indoors: 15–30 Risk Level: Medium
+
+→ Immediate Action: “Block 30 minutes this week for uninterrupted reflection — no screens, no meetings.”
+
+Medium-Term Goal: “Try journaling or guided meditation to process stress. Consider a peer support group for professionals.”
+
+🧠 Suggestion Modules
+Each suggestion is tagged by:
+
+Theme: Social / Emotional / Routine / Cognitive
+
+Format: Text / Link / App / Helpline
+
+Disclosure Level: Summary / Expandable
+
+🔹 3. Progressive Disclosure UI — Wireframe Flow
+🎯 Purpose
+To deliver insights gently, letting users explore at their own pace.
+
+🧩 Wireframe Sections
+🟦 Top Card: Summary
+Profile Name (e.g., The Agile Pathfinder)
+
+ERI Score: 67/100 → Medium Risk
+
+Color-coded background (e.g., calming blue)
+
+“You’re not alone” stat
+
+🔽 Expandable Sections
+Narrative “You adjust your course with skill, navigating change thoughtfully…” → Expand for full story
+
+Suggestions
+
+Immediate Action
+
+Medium-Term Goal → Expand for linked resources
+
+Celebrity Parallel
+
+Name + Story → Expand for quote, video, or article
+
+Risk Radar
+
+Spider chart: Stress, Coping, Habit Change, Mood Swings
+
+Toggle: “Compare with population”
+
+Quote Carousel
+
+Rotating inspirational quotes
+
+Option to “Save” or “Share”
+
+Progress Tracker
+
+Timeline of past assessments
+
+“Your coping score improved by 12 points since last month”
+
+🧠 UX Principles
+Gentle first impression → Summary only
+
+User-led depth → Expandable insights
+
+Visual storytelling → Charts, colors, quotes
+
+Emotional safety → No labels, no judgment
