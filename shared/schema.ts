@@ -135,7 +135,7 @@ export interface UserAchievement {
   title: string;
   description: string;
   dateEarned: string;
-  badgeEmoji: string;
+  badgeEmoji: string; // Icon key (e.g., "sprout", "flame", "muscle") - to be rendered with lucide-react icons
 }
 
 // Anonymous Benchmarking Types
