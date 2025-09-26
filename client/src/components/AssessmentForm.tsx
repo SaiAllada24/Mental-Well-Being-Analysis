@@ -58,7 +58,16 @@ export function AssessmentForm({ onSubmit, onBack }: AssessmentFormProps) {
 
   const handleSubmit = (data: AssessmentData) => {
     console.log('Assessment submitted:', data);
+    console.log('Form validation errors:', form.formState.errors);
     onSubmit(data);
+  };
+
+  const handleFormSubmit = () => {
+    console.log('Form submission triggered');
+    console.log('Current form values:', form.getValues());
+    console.log('Form validation errors:', form.formState.errors);
+    console.log('Form is valid:', form.formState.isValid);
+    form.handleSubmit(handleSubmit)();
   };
 
   const renderStep = () => {

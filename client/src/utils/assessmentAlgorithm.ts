@@ -1,4 +1,5 @@
 import { AssessmentData, RiskProfile, riskProfiles, ProfileCriteria, ERIResult, ERISubScores, ERIWeights } from "@shared/schema";
+import { generateAdaptiveSuggestions, type PersonalizedRecommendations } from "./adaptiveSuggestions";
 
 interface ProcessedAssessmentData {
   stress: "Yes" | "No";
@@ -143,8 +144,8 @@ function mapDaysIndoorsBack(daysIndoors: "1-14" | "15-30" | "31-60" | ">60" | "G
   }
 }
 
-// Enhanced assessment calculation that includes ERI
-export function calculateAssessmentWithERI(data: AssessmentData): ERIResult {
+// Enhanced assessment calculation that includes ERI and adaptive recommendations
+export function calculateAssessmentWithERI(data: AssessmentData): ERIResult & { adaptiveRecommendations: PersonalizedRecommendations } {
   // Cache the original assessment for demographic preservation
   cachedOriginalAssessment = data;
   
@@ -167,14 +168,21 @@ export function calculateAssessmentWithERI(data: AssessmentData): ERIResult {
   // Calculate ERI result with profile matching
   const result = calculateERI(processedData);
   
+  // Generate adaptive recommendations based on assessment data and ERI results
+  const adaptiveRecommendations = generateAdaptiveSuggestions(data, result, result.profileMatch);
+  
   console.log(`ERI Calculation Results:`, {
     eriScore: result.eriScore,
     riskLevel: result.riskLevel,
     subScores: result.subScores,
-    profileMatch: result.profileMatch.name
+    profileMatch: result.profileMatch.name,
+    adaptiveSuggestions: adaptiveRecommendations.primarySuggestions.length
   });
   
-  return result;
+  return {
+    ...result,
+    adaptiveRecommendations
+  };
 }
 
 // Mapping function to convert assessment answers to profile criteria format
