@@ -44,9 +44,28 @@ export function AssessmentForm({ onSubmit, onBack }: AssessmentFormProps) {
     }
   });
 
-  const handleNext = () => {
-    if (currentStep < TOTAL_STEPS) {
+  const handleNext = async () => {
+    // Validate current step before proceeding
+    const fieldsToValidate = getFieldsForStep(currentStep);
+    const isStepValid = await form.trigger(fieldsToValidate);
+    
+    if (isStepValid && currentStep < TOTAL_STEPS) {
       setCurrentStep(currentStep + 1);
+    }
+  };
+
+  const getFieldsForStep = (step: number): (keyof AssessmentData)[] => {
+    switch (step) {
+      case 1:
+        return ['gender', 'country', 'occupation', 'self_employed'];
+      case 2:
+        return ['family_history', 'treatment', 'mental_health_history'];
+      case 3:
+        return ['days_indoors', 'growing_stress', 'changes_habits', 'mood_swings'];
+      case 4:
+        return ['coping_struggles', 'work_interest', 'social_weakness', 'mental_health_interview', 'care_options'];
+      default:
+        return [];
     }
   };
 
@@ -56,10 +75,22 @@ export function AssessmentForm({ onSubmit, onBack }: AssessmentFormProps) {
     }
   };
 
-  const handleSubmit = (data: AssessmentData) => {
+  const handleSubmit = async (data: AssessmentData) => {
     console.log('Assessment submitted:', data);
     console.log('Form validation errors:', form.formState.errors);
-    onSubmit(data);
+    
+    // Final validation of all fields
+    const isValid = await form.trigger();
+    if (isValid) {
+      onSubmit(data);
+    } else {
+      console.error('Form validation failed on final submission:', form.formState.errors);
+    }
+  };
+
+  const handleFormError = (errors: any) => {
+    console.error('Form validation failed:', errors);
+    console.log('Current form values:', form.getValues());
   };
 
   const handleFormSubmit = () => {
@@ -568,7 +599,7 @@ export function AssessmentForm({ onSubmit, onBack }: AssessmentFormProps) {
 
         {/* Form */}
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleSubmit)}>
+          <form onSubmit={form.handleSubmit(handleSubmit, handleFormError)}>
             <Card>
               <CardHeader>
                 <CardTitle>Mental Health Assessment</CardTitle>
