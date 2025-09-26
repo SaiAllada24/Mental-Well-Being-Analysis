@@ -1,0 +1,127 @@
+🔹 Adaptive Suggestion Engine — Logic Blueprint
+🎯 Inputs
+Gender
+
+Occupation
+
+Days Indoors
+
+Risk Level (from ERI)
+
+Profile Archetype
+
+🧠 Output Structure
+Each output includes:
+
+Immediate Action: Gentle, doable within 48 hours
+
+Medium-Term Goal: Reflective, achievable in 2–4 weeks
+
+Resource Link: App, article, or helpline
+
+Tone: Tailored to gender + occupation
+
+🌳 Logic Tree Sample
+Branch:
+Gender: Female Occupation: Homemaker Days Indoors: >60 Risk Level: High Profile: The Gentle Guardian
+
+→ Immediate Action “Reach out to one person you trust — even a short voice note or message can reopen connection gently.”
+
+Medium-Term Goal “Explore community-based support apps like Wysa or join a local women’s wellness circle. You don’t have to do this alone.”
+
+Resource
+
+Wysa
+
+Sheroes — Indian women’s wellness network
+
+Branch:
+Gender: Male Occupation: Corporate Days Indoors: 15–30 Risk Level: Medium Profile: The Agile Pathfinder
+
+→ Immediate Action “Block 30 minutes this week for solo reflection — no screens, no meetings. Just you and your thoughts.”
+
+Medium-Term Goal “Try guided journaling or join a peer support forum for professionals. You’re not the only one navigating this.”
+
+Resource
+
+MindJournal
+
+YourDOST — Indian mental health support for professionals
+
+Branch:
+Gender: Other Occupation: Student Days Indoors: Go out daily Risk Level: Low Profile: The Rising Voice
+
+→ Immediate Action “Share one personal insight with a friend or peer. Vulnerability builds trust.”
+
+Medium-Term Goal “Join a creative expression group or mental health club. Your voice matters.”
+
+Resource
+
+7 Cups
+
+The Artidote — global storytelling community
+
+🔹 UI Layout — Radar + Export Flow
+🧭 Risk Radar Section
+📊 Spider Chart
+Axes: Stress, Coping, Habit Change, Mood Swings, Social Withdrawal, Work Disengagement
+
+Filled polygon: User score
+
+Dotted outline: Population average
+
+Color zones: Green (stable), Yellow (moderate), Red (elevated)
+
+🧩 Features
+Toggle: “Compare with similar users”
+
+Tooltip: “Your stress score is 72 — higher than 68% of users”
+
+Button: “Retake assessment” → updates radar
+
+📄 Exportable Profile Document (PDF/Doc)
+🧾 Sections
+Header
+
+Profile Name: The Agile Pathfinder
+
+ERI Score: 67/100 → Medium Risk
+
+Date of Assessment
+
+Narrative
+
+“You adjust your course with skill, navigating change thoughtfully…”
+
+Risk Radar
+
+Embedded spider chart
+
+Comparison with population
+
+Suggestions
+
+Immediate Action
+
+Medium-Term Goal
+
+Resource Links
+
+Quote
+
+“Adaptability is choosing your response, not just reacting.”
+
+Celebrity Parallel
+
+Michelle Obama — adapted to public life while maintaining personal values and routines.
+
+Progress Log
+
+“Your coping score improved by 12 points since last month.”
+
+🧠 UX Flow Summary
+Section	Interaction
+Summary Card	Profile name, ERI score, color-coded
+Expandable Panels	Narrative, Suggestions, Quote, Radar
+Radar Chart	Compare toggle, tooltip, retake button
+Export Button	“Download your profile” → PDF/Doc
