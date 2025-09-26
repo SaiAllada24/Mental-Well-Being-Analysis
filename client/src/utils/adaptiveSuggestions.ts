@@ -382,7 +382,27 @@ function generateContextualSuggestions(
     });
   }
   
-  return suggestions.sort((a, b) => b.priority - a.priority);
+  const sortedSuggestions = suggestions.sort((a, b) => b.priority - a.priority);
+  
+  // Get additional resources and emergency support
+  const additionalResources = findResourcesByType("app", [gender]).slice(0, 3);
+  const emergencySupport = findResourcesByType("professional", ["Any"]).slice(0, 2);
+  
+  // Create contextual message based on ERI score
+  const contextualMessage = eriScore >= 70 
+    ? "Your risk assessment indicates significant concerns. These personalized recommendations are designed to provide immediate and ongoing support."
+    : eriScore >= 40
+    ? "Your assessment shows moderate risk factors. These suggestions can help you build resilience and improve your wellbeing."
+    : "Your assessment shows some areas for growth. These recommendations can help you maintain and enhance your mental wellness.";
+  
+  const result: PersonalizedRecommendations = {
+    primarySuggestions: sortedSuggestions,
+    additionalResources,
+    emergencySupport,
+    contextualMessage
+  };
+  
+  return result;
 }
 
 /**
