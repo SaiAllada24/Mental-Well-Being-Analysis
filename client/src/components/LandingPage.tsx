@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Shield, Brain, TrendingUp } from "lucide-react";
+import { Shield, Brain, TrendingUp, AlertTriangle } from "lucide-react";
 
 interface LandingPageProps {
   onStartAssessment: () => void;
@@ -33,6 +33,21 @@ export function LandingPage({ onStartAssessment }: LandingPageProps) {
             <Shield className="inline h-4 w-4 mr-1" />
             Confidential and secure • Takes 5-8 minutes
           </p>
+        </div>
+
+        {/* Important Notice */}
+        <div className="mb-16 text-center">
+          <Card className="bg-amber-50 dark:bg-amber-950/20 border-amber-200 dark:border-amber-800">
+            <CardContent className="pt-6">
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <AlertTriangle className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+                <h3 className="font-semibold text-amber-800 dark:text-amber-200">Important Notice</h3>
+              </div>
+              <p className="text-sm text-amber-700 dark:text-amber-300">
+                Results are for informational purposes and should not replace professional mental health care.
+              </p>
+            </CardContent>
+          </Card>
         </div>
 
         {/* How It Works */}
@@ -77,10 +92,7 @@ export function LandingPage({ onStartAssessment }: LandingPageProps) {
           <Card className="bg-card/50 border-primary/20">
             <CardContent className="pt-6">
               <h3 className="font-semibold mb-2">Your Privacy Matters</h3>
-              <p className="text-sm text-muted-foreground">
-                This assessment is completely anonymous. No personal information is stored or shared. 
-                Results are for informational purposes and should not replace professional mental health care.
-              </p>
+              <p className="text-sm text-muted-foreground">This assessment is completely anonymous. No personal information is stored or shared.</p>
             </CardContent>
           </Card>
         </div>
