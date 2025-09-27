@@ -8,7 +8,7 @@ interface LandingPageProps {
 
 export function LandingPage({ onStartAssessment }: LandingPageProps) {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/5 to-accent/10">
+    <div className="min-h-screen bg-gradient-to-br from-primary/5 to-accent/10 text-[20px] font-medium">
       <div className="container mx-auto px-4 py-12 max-w-4xl">
         {/* Hero Section */}
         <div className="text-center space-y-6 mb-16">
@@ -23,7 +23,7 @@ export function LandingPage({ onStartAssessment }: LandingPageProps) {
           <Button 
             size="lg" 
             onClick={onStartAssessment}
-            className="text-lg px-8 py-6 hover-elevate"
+            className="text-lg px-8 py-6 hover-elevate font-bold"
             data-testid="button-start-assessment"
           >
             Begin Assessment
